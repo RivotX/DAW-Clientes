@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de cuadros de Waifus</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header class="cabezera">
+        <h1 id="titulo">Venta de cuadros</h1>
+        <p id="titulo2">Explora entre los cuadros más vendidos este 2023</p>
+        <button id="back" type="button" onclick="rehacerIndex()">Volver</button>
+        <button id="botonencuesta" type="button" onclick="encuesta()">Vota por tu favorita!</button>
+    </header>
+
+    <div class="contenedor">
+        <div class="cuadro">
+            <div class="cuadroimagen1">
+                <img src="img/chica2.png" class="imagen">
+            </div>
+            <button id="boton1" type="button" onclick="ampliar1()">ver mas</button>
+        </div>
+        <div class="cuadro">
+            <div class="cuadroimagen2">
+                <img src="img/cuadro1.jfif" class="imagen">
+            </div>
+            <button id="boton2" type="button" onclick="ampliar2()">ver mas</button>
+        </div>
+        <div class="cuadro">
+            <div class="cuadroimagen3">
+                <img src="img/chica3.jpg" class="imagen">
+            </div>
+            <button id="boton3" type="button" onclick="ampliar3()"> ver mas</button>
+        </div>
+        <div id=textos>
+            <div id="texto1js"></div>
+            <div id="texto2js"></div>
+            <div id="texto3js"></div>
+        </div>
+        <div id="alao"></div>
+        <div id="Encform">
+            <div id="Divencuesta" style="display: none;">
+                <p id="Pfav">Vota por tu favorita!</p>
+                <label>
+                    <input type="radio" name="voto" value="opcion1">
+                    1.Josefina
+                </label>
+                <br>
+
+                <label>
+                    <input type="radio" name="voto" value="opcion2">
+                    2.Ramoncina
+                </label>
+                <br>
+
+                <label>
+                    <input type="radio" name="voto" value="opcion3">
+                    3.Alejandra
+                </label>
+                <br>
+                <label>
+                    Nombre Usuario
+                    <input type="text" name="usuario" value="">
+                </label>
+                <br>
+                <label>Email <br>
+                    <input type="email" name="email" value="">
+                    
+                </label>
+                <br>
+
+                <input id="nnn" type="submit" value="Votar" onclick="rehacerIndexDelay()">
+            </div>
+            <div id="emote" style="display: none;">
+                <p>👍</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</body>
+
+</html>

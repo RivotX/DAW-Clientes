@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Documento HTML con Script</title>
+    <style>
+    </style>
+    <script>
+        var numero_mesas;
+        var min = 0;
+        var max = 4;       
+        var mesas = [];
+
+        var flag_mesas = true;;
+        do {
+            numero_mesas = prompt('Introduzca número de mesas');
+
+            if (numero_mesas > 0 && (numero_mesas != null || numero_mesas != "")) {
+                flag_mesas = false;
+            } else {
+                alert("Introduce un valor correcto.");
+            } 
+        } while (flag_mesas);
+
+
+        for (let i = 0; i < numero_mesas; i++) {
+            mesas[i] = Math.floor(Math.random() * (max - min + 1)) + min;    
+        }
+
+        var cadena;
+
+        function imprimir() {
+            cadena = mesas.join(' '); 
+            alert("Estado de las mesas: " + cadena);
+        }
+        
+        imprimir();
+        
+
+        var numero_comensales;
+
+        function operar() {
+            numero_comensales = prompt('Introduzca número de personas para solicitar una mesa libre:');
+            if (numero_comensales > 0 && numero_comensales <= 4 && (numero_comensales != null || numero_comensales != "")) {
+                var indice;
+                var flag = false;
+                for (let i = 0; i < mesas.length; i++) {
+                    if(mesas[i] == 0){
+                        mesas[i] = numero_comensales;
+                        flag = true;
+                        indice  = i;
+                        break;
+                    }
+                }
+
+                if(!flag){
+                    alert("Lo sentimos no quedan mesas libres.");
+                }else{
+                    alert("Se le ha asignado la mesa nº " + (indice + 1));
+                }
+                imprimir();
+                operar();
+            }else if ((numero_comensales == 0 || numero_comensales == null || numero_comensales == "") && numero_comensales <= 4 ) {
+                operar();
+            }
+                
+      
+            else{
+                if (numero_comensales > 4) {
+                    alert("Lo sentimos, no admitimos mesas de más de 4 personas.");
+                    operar(); 
+                } else {
+                    alert("Hasta luego, vuelve pronto!");
+                    //return;
+                }   
+            }
+        }
+
+        operar();
+
+
+        
+    </script>
+</head>
+<body>
+
+</body>
+</html>

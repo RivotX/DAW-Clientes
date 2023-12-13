@@ -1,0 +1,104 @@
+body {
+    background-color: #333333;
+    margin: 0;
+    background-image: url(img/fondo-oscuro-espacio-diseno-abstracto-tecnologia-puntos-lineas-conexion-carteles-o-web_258787-765.avif);
+}
+
+.cabezera {
+    text-align: center;
+    color: white;
+    padding: 20px 0;
+}
+
+#titulo {
+    margin-top: 1%;
+    font-size: 46px;
+}
+
+#titulo2 {
+    margin-top: 7px;
+    font-size: 20px;
+}
+
+.imagen {
+    width: 460px;
+    height: 705px;
+}
+
+.contenedor {
+    display: flex;
+    margin-left: 14%;
+    margin-right: 5%;
+}
+
+.cuadroimagen2 {
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+.botones {
+    margin-left: 5%;
+    display: flex;
+}
+
+#boton1 {
+    width: 40%;
+    height: 50px;
+    margin-left: 35%;
+    border-radius: 14px;
+}
+
+#boton2 {
+    width: 40%;
+    height: 50px;
+    margin-left: 35%;
+    border-radius: 14px;
+}
+
+#boton3 {
+    width: 40%;
+    height: 50px;
+    margin-left: 35%;
+    border-radius: 14px;
+}
+
+#back {
+    float: left;
+    position: relative;
+    margin-top: -4%;
+    margin-left: 60px;
+    width: 300px;
+    height: 50px;
+    border-radius: 14px;
+}
+
+#botonencuesta {
+
+    float: right;
+    position: relative;
+    margin-top: -4%;
+    width: 300px;
+    height: 50px;
+    border-radius: 14px;
+    margin-right: 5%;
+}
+
+
+#Divencuesta {
+    color: white;
+    margin-left: 4%;
+    position: relative;
+    font-size: larger;
+}
+
+#emote {
+    position: relative;
+    font-size: 50px;
+    margin-left: 10%;
+    margin-top: -10%;
+}
+
+#encform {
+    display: flex;
+}

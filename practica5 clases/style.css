@@ -1,0 +1,26 @@
+#tabla {
+    margin-top: 10vh;
+}
+
+body {
+    background-color: #adbcc1;
+    background-image: url('descarga\ .JPG');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#botoninfo {
+    width: 15%;
+}
+
+.divInfo {
+    display: none;
+    height: 60vh;
+    width: 60%;
+    margin: auto;
+    border: 1px black;
+    border-radius: 2px;
+    background-color: #212529;
+    text-justify: auto;
+    color: white;
+}
