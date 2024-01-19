@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      img {
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+    </style>
+    <link href="./output.css" rel="stylesheet" />
+  </head>
+  <body
+    id="body"
+    class="min-h-screen text-white bg-gradient-to-b from-gray-900 to-gray-600"
+  >
+    <h1 class="text-3xl font-bold text-center underline">
+      Editor de Artículos
+    </h1>
+    <div class="flex flex-wrap justify-center mt-16 mb-3">
+      <div
+        id="principal"
+        class="p-4 bg-black min-h-96 rounded-xl min-w-80"
+      ></div>
+
+      <label for="areaTexto" class="w-full text-center border rounded-md"
+        >Introduce la información:</label
+      >
+      <div class="flex items-center justify-center w-full h-52">
+        <textarea id="areaTexto" class="w-1/3 h-full text-black"></textarea>
+      </div>
+      <div class="flex flex-wrap justify-center w-full gap-12 mt-5 mb-3 gap">
+        <button id="botonH1" class="p-2 bg-gray-500 rounded-md">
+          Agregar H1
+        </button>
+        <button id="botonH2" class="p-2 bg-gray-500 rounded-md">
+          Agregar H2
+        </button>
+        <button id="botonH3" class="p-2 bg-gray-500 rounded-md">
+          Agregar H3
+        </button>
+        <button id="botonP" class="p-2 bg-gray-500 rounded-md">
+          Agregar Parrafo
+        </button>
+        <button id="botonIMG" class="p-2 bg-gray-500 rounded-md">
+          Agregar imagen
+        </button>
+        <button id="botonFuente" class="p-2 bg-gray-500 rounded-md">
+          Cambiar fuente
+        </button>
+        <button id="botonBG" class="p-2 bg-gray-500 rounded-md">
+          Cambiar color de fondo
+        </button>
+        <button id="botonColorTexto" class="p-2 bg-gray-500 rounded-md">
+          Cambiar color de texto
+        </button>
+        <button id="deshacer" class="p-2 bg-gray-500 rounded-md">
+          deshacer
+        </button>
+        <button id="reset" class="p-2 bg-gray-500 rounded-md">Resetear</button>
+        <button id="modoclaro" class="p-2 bg-gray-500 rounded-md">
+          Cambiar tema
+        </button>
+        <button id="fotos" class="p-2 bg-gray-500 rounded-md">
+          Ocultar fotos
+        </button>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        let principal = $("#principal");
+        let area = $("#areaTexto");
+        let botonH1 = $("#botonH1");
+        let botonH2 = $("#botonH2");
+        let botonH3 = $("#botonH3");
+        let botonP = $("#botonP");
+        let inputIMG = $("#inputIMG");
+        let botonIMG = $("#botonIMG");
+        let botonBG = $("#botonBG");
+        let botonFuente = $("#botonFuente");
+        let body = $("#body");
+        let botonColorTexto = $("#botonColorTexto");
+        let deshacer = $("#deshacer");
+        let reset = $("#reset");
+        let modoclaro = $("#modoclaro");
+        let contenido;
+        let isH1 = false;
+        let nuevoH1 = $("<h1 class='text-5xl underline text-bold'>");
+        let toggleBG = false;
+        let toggleFuente = false;
+        let toggleColor = false;
+        let toggleTheme = true;
+        let areaTexto = $("#areaTexto");
+        let fotos = $("#fotos");
+        let alternar = false;
+
+        area.on("input", function () {
+          contenido = area.val();
+        });
+
+        botonH1.on("click", function () {
+          if (contenido) {
+            if (!isH1) {
+              nuevoH1.text(contenido);
+              principal.append(nuevoH1);
+              botonH1.text("Cambiar H1");
+              isH1 = true;
+            } else {
+              nuevoH1.text(contenido);
+            }
+          }
+        });
+        botonH2.on("click", function () {
+          if (contenido) {
+            var nuevoH2 = $("<h2 class='text-3xl'>");
+            nuevoH2.text(contenido);
+            principal.append(nuevoH2);
+          }
+        });
+        botonH3.on("click", function () {
+          if (contenido) {
+            var nuevoH3 = $("<h3 class='text-2xl'>");
+            nuevoH3.text(contenido);
+            principal.append(nuevoH3);
+          }
+        });
+        botonP.on("click", function () {
+          if (contenido) {
+            var nuevoP = $("<p class='text-lg'>");
+            nuevoP.text(contenido);
+            principal.append(nuevoP);
+          }
+        });
+        botonIMG.on("click", function () {
+          if (contenido) {
+            var urlImagen = contenido;
+            if (urlImagen.length > 0) {
+              var nuevaImagen = $("<img>")
+                .attr("src", urlImagen)
+                .addClass("mt-2 ");
+              principal.append(nuevaImagen);
+            } else {
+              console.log("Introduce la URL de la imagen");
+            }
+          }
+        });
+        botonBG.on("click", function () {
+          toggleBG = !toggleBG;
+          if (toggleBG) {
+            principal.css("background-color", contenido);
+          } else {
+            principal.css("background-color", contenido);
+          }
+        });
+        botonFuente.on("click", function () {
+          toggleFuente = !toggleFuente;
+          if (toggleFuente) {
+            body.css("font-family", contenido);
+          } else {
+            body.css("font-family", contenido);
+          }
+        });
+        botonColorTexto.on("click", function () {
+          toggleColor = !toggleColor;
+          if (toggleColor) {
+            principal.css("color", contenido);
+          } else {
+            principal.css("color", contenido);
+          }
+        });
+        deshacer.on("click", function () {
+          principal.children().last().remove();
+        });
+        reset.on("click", function () {
+          principal.children().remove();
+        });
+        modoclaro.on("click", function () {
+          if (toggleTheme) {
+            toggleTheme = !toggleTheme;
+            console.log(toggleTheme);
+            body.css("background", "white");
+            body.css("color", "black");
+            areaTexto.css("background", "#B5B2B2");
+            principal.css("color", "white");
+            
+
+          } else {
+            toggleTheme = !toggleTheme;
+
+            console.log(toggleTheme);
+            body.css(
+              "background-image",
+              "linear-gradient(to bottom, #111827, #4a5568)"
+            );
+            body.css("color", "white");
+            areaTexto.css("background", "#B5B2B2");
+          }
+        });
+        fotos.on("click", function () {
+          alternar = !alternar;
+          var imagenes = principal.find("img");
+          if (imagenes.length > 0) {
+            if (alternar) {
+              fotos.text("Mostrar fotos");
+              imagenes.css("opacity", "0");
+              imagenes.css("transition", "opacity 0.5s ease-in-out");
+            } else {
+              fotos.text("Ocultar fotos");
+              imagenes.css("opacity", "1");
+              imagenes.css("transition", "opacity 0.5s ease-in-out");
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
