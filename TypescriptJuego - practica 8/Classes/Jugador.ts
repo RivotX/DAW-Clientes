@@ -1,4 +1,4 @@
-class Jugador {
+export class Jugador {
   nombre: string;
   puntos_salud: number;
   puntos_ataque: number;
@@ -8,6 +8,11 @@ class Jugador {
     this.puntos_salud = 20;
     this.puntos_ataque = 0;
     this.dinero = 2;
+  }
+
+  public calcularFuerza(): void {
+    const numeroAleatorio = Math.floor(Math.random() * 10) + 1;
+    this.puntos_ataque = numeroAleatorio;
   }
 
   public getNombre(): string {
@@ -35,16 +40,16 @@ class Jugador {
   public setDinero(dinero: number) {
     this.dinero = dinero;
   }
-  public tostring() {
-    console.log(
-      "nombre: " +
-        this.nombre +
-        "puntos_salud: " +
-        this.puntos_salud +
-        "puntos_ataque: " +
-        this.puntos_ataque +
-        "dinero " +
-        this.dinero
-    );
+  public tostring(): string {
+    let texto =
+      "nombre:" +
+      this.nombre +
+      "\npuntos_salud: " +
+      this.puntos_salud +
+      "\npuntos_ataque: " +
+      this.puntos_ataque +
+      "\nDinero " +
+      this.dinero;
+    return texto;
   }
 }

@@ -1,4 +1,4 @@
-class Enemigo {
+export class Enemigo {
   private nombre: string;
   private puntos_ataque: number;
   constructor(nombre: string) {
@@ -7,7 +7,7 @@ class Enemigo {
   }
 
   public calcularFuerza(): void {
-    const numeroAleatorio = Math.floor(Math.random() * 10) + 1;
+    const numeroAleatorio = Math.floor(Math.random() * 15) + 1;
     this.puntos_ataque = numeroAleatorio;
   }
   public soltarDinero(): number {
@@ -31,9 +31,9 @@ class Enemigo {
     this.puntos_ataque = puntos_ataque;
   }
 
-  public tostring() {
-    console.log(
-      "nombre: " + this.nombre + "puntos_ataque: " + this.puntos_ataque
-    );
+  public tostring(): string {
+    let texto =
+      "Tu enemigo será:\nnombre: " + this.nombre + "\npuntos_ataque: " + this.puntos_ataque;
+    return texto;
   }
 }
