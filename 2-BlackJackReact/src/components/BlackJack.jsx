@@ -2,7 +2,7 @@ import Card from "./Card";
 import cards from "./CardImages";
 import { useState, useEffect } from "react";
 
-function BlackJack({ perdidoB, onPerdidoChange }) {
+function BlackJack({ onPerdidoChange }) {
     const randomNumber1 = Math.floor(Math.random() * 48);
     const randomNumber2 = Math.floor(Math.random() * 48);
 
@@ -26,15 +26,11 @@ function BlackJack({ perdidoB, onPerdidoChange }) {
 
     useEffect(() => {
         let suma = 0;
-        let sumaEnemigo = 0;
-
-        let tieneAs = false;
         let tieneAs_e = false;
-
 
         cartasEnemigo.forEach((carta) => {
             const valorCarta = carta.value.length > 1 ? carta.value[1] : carta.value[0];
-            sumaEnemigo += valorCarta;
+            suma += valorCarta;
 
             // es un as?
             if (carta.value.length > 1 && valorCarta === 11) {
@@ -42,11 +38,16 @@ function BlackJack({ perdidoB, onPerdidoChange }) {
             }
         });
 
-        if (sumaEnemigo > 21 && tieneAs_e) {
-            sumaEnemigo -= 10;
+        if (suma > 21 && tieneAs_e) {
+            suma -= 10;
         }
 
-        setcontadorEnemigo(sumaEnemigo);
+        setcontadorEnemigo(suma);
+    }, [cartasEnemigo]);
+
+    useEffect(() => {
+        let suma = 0;
+        let tieneAs = false;
 
         cartas.forEach((carta) => {
             const valorCarta = carta.value.length > 1 ? carta.value[1] : carta.value[0];
@@ -63,12 +64,14 @@ function BlackJack({ perdidoB, onPerdidoChange }) {
         }
 
         setcontador(suma);
+
         if (suma > 21) {
-            setPerdido(true)
-            onPerdidoChange(true); // Esto ejecuta la función handlePerdidoChange en App.jsx pasando true como parametro
-            console.log("perdiste")
+            setPerdido(true);
+            onPerdidoChange(true);
+            console.log("perdiste");
         }
     }, [cartas]);
+
 
     return (
         <div className="w-2/5 border-8 border-solid rounded-lg h-5/6 border-amber-950">

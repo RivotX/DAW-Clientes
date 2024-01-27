@@ -21,7 +21,7 @@ export default function App() {
         BlackJack
       </h1>
       <div className='flex items-center justify-center min-h-full pt-5'>
-        <BlackJack perdidoB={perdido} onPerdidoChange={handlePerdidoChange} />
+        <BlackJack onPerdidoChange={handlePerdidoChange} />
       </div>
       {/* Renderizar Modal has perdido*/}
       {perdido && (
