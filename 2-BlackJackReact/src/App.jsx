@@ -1,9 +1,14 @@
 import bg from './img/bg.png';
 import BlackJack from './components/BlackJack';
 import { useState } from 'react';
-import HasperdidoModal from "./components/HasPerdidoModal";
-import HasGanadoModal from "./components/HasGanadoModal";
-import EmpateModal from "./components/EmpateModal";
+import ModalResultado from "./components/ModalResultado";
+
+import XD from './img/XD.png'
+import clown from './img/clown.png'
+import gigachad from './img/gigachad.png'
+import gigachad2 from './img/gigachad2.png'
+import pokerface from './img/._..png'
+
 
 export default function App() {
   const [perdido, setPerdido] = useState(false);
@@ -13,21 +18,18 @@ export default function App() {
   const handlePerdidoChange = (nuevoEstado) => {
     setTimeout(() => {
       setPerdido(nuevoEstado);
-      console.log(nuevoEstado);
 
     }, 500);
   };
   const handleGanadoChange = (nuevoEstado) => {
     setTimeout(() => {
       setGanado(nuevoEstado);
-      console.log(nuevoEstado);
 
     }, 500);
   };
   const handleEmpateChange = (nuevoEstado) => {
     setTimeout(() => {
       setEmpate(nuevoEstado);
-      console.log(nuevoEstado);
 
     }, 500);
   };
@@ -46,15 +48,15 @@ export default function App() {
       </div>
       {/* Renderizar Modal has perdido*/}
       {perdido && (
-        <HasperdidoModal />
+        <ModalResultado texto={"🤣🤡XDD Has perdido XDXD🤡🤣"} img={clown} img2={XD} img3={XD} img4={clown}/>
       )}
       {/* Renderizar Modal has ganado*/}
       {ganado && (
-        <HasGanadoModal />
+        <ModalResultado texto={"🗿You won, easy game🗿"} img={gigachad} img2={gigachad2} img3={gigachad2} img4={gigachad}/>
       )}
       {/* Renderizar Modal has ganado*/}
       {empate && (
-        <EmpateModal />
+        <ModalResultado texto={"empate"} img={pokerface} img2={pokerface} img3={pokerface} img4={pokerface}/>
       )}
       
     </div>

@@ -24,12 +24,21 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
     const handlePlantarse = () => {
         if (!isPlantado) {
+            let nuevoContadorEnemigo = 0;
+
+            // Calcular el contador del crupier
+            cartasEnemigo.forEach((carta) => {
+                let valorCarta = carta.value[0];
+                if (carta.value.length > 1 && nuevoContadorEnemigo + 10 <= 21) {
+                    valorCarta = carta.value[1];
+                }
+                nuevoContadorEnemigo += valorCarta;
+            });
+
             setisPlantado(true);
             const nuevasCartasEnemigo = [...cartasEnemigo];
             nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img };
             setcartasEnemigo([...nuevasCartasEnemigo]);
-
-            let nuevoContadorEnemigo = nuevasCartasEnemigo.reduce((total, carta) => total + parseInt(carta.value), 0);
 
             if (nuevoContadorEnemigo < 17 && nuevoContadorEnemigo !== 21) {
                 while (nuevoContadorEnemigo < 17) {
@@ -46,7 +55,6 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     }
 
     //contador jugador
-
     useEffect(() => {
         let suma = 0;
         let tieneAs = false;
@@ -67,6 +75,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
         setcontador(suma);
 
         if (suma > 21) {
+            setJuegoFinalizado(true);
             setPerdido(true);
             onPerdidoChange(true)
         }
@@ -90,6 +99,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
             suma -= 10;
         }
         if (suma > 21) {
+            setJuegoFinalizado(true);
             setGanado(true);
             onGanadoChange(true)
         }
@@ -98,40 +108,105 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
     //verificar ganador 
     useEffect(() => {
-        const nuevasCartasEnemigo = [...cartasEnemigo];
-        const nuevasCartas = [...cartas];
+        let nuevoContador = 0;
+        let nuevoContadorEnemigo = 0;
+        let asesJugador = 0;
+        let asesEnemigo = 0;
 
-        const nuevoContadorEnemigo = nuevasCartasEnemigo.reduce((total, carta) => total + parseInt(carta.value), 0);
-        const nuevoContador = nuevasCartas.reduce((total, carta) => total + parseInt(carta.value), 0);
+        // Calcular el contador del jugador
+        cartas.forEach((carta) => {
+            let valorCarta = carta.value[0];
+            if (carta.value.length > 1) {
+                asesJugador++;
+            } else {
+                nuevoContador += Number(valorCarta);
+            }
+        });
 
-        if (nuevoContador > 21) {
-            setPerdido(true);
-        } else if (nuevoContadorEnemigo > 21) {
-            setGanado(true);
-        } else if (nuevoContador === nuevoContadorEnemigo) {
-            setGanado(false);
-            setPerdido(false);
-            setEmpate(true);
-        } else if (nuevoContador > nuevoContadorEnemigo) {
-            setGanado(true);
-            setPerdido(false);
-            setEmpate(false);
-        } else {
-            setPerdido(true);
-            setEmpate(false);
-            setGanado(false);
+        // Manejar el valor de los ases del jugador
+        for (let i = 0; i < asesJugador; i++) {
+            if (nuevoContador + 11 <= 21) {
+                nuevoContador += 11;
+            } else {
+                nuevoContador += 1;
+            }
         }
 
+        // Calcular el contador del crupier
+        cartasEnemigo.forEach((carta) => {
+            let valorCarta = carta.value[0];
+            if (carta.value.length > 1) {
+                asesEnemigo++;
+            } else {
+                nuevoContadorEnemigo += Number(valorCarta);
+            }
+        });
 
-        // Solo ejecutar onPerdidoChange al final del juego
-        if (juegoFinalizado && perdido) {
+        // Manejar el valor de los ases del crupier
+        for (let i = 0; i < asesEnemigo; i++) {
+            if (nuevoContadorEnemigo + 11 <= 21) {
+                nuevoContadorEnemigo += 11;
+            } else {
+                nuevoContadorEnemigo += 1;
+            }
+        }
+
+        console.log("nuevoContadorEnemigo", nuevoContadorEnemigo);
+        console.log("nuevoContador", nuevoContador);
+
+        // Función para actualizar los estados
+        const actualizarEstados = () => {
+            if (nuevoContador > 21) {
+                setGanado(false);
+                setEmpate(false);
+                setPerdido(true);
+
+                console.log("Perdido: jugador pasó de 21");
+
+            } else if (nuevoContadorEnemigo > 21) {
+                setPerdido(false);
+                setEmpate(false);
+                setGanado(true);
+
+                console.log("Ganado: crupier pasó de 21", "ganado", ganado, "perdido", perdido);
+
+            } else if (nuevoContador < nuevoContadorEnemigo) {
+                setGanado(false);
+                setEmpate(false);
+                setPerdido(true);
+                console.log("Perdido: contador jugador menor que contador crupier", "ganado", ganado, "perdido", perdido);
+
+            } else if (nuevoContador > nuevoContadorEnemigo) {
+                setPerdido(false);
+                setEmpate(false);
+                setGanado(true);
+
+                console.log("Ganado: contador jugador mayor que contador crupier");
+
+            } else if (nuevoContador === nuevoContadorEnemigo) {
+                setPerdido(false);
+                setGanado(false);
+                setEmpate(true);
+                console.log("Empate: contadores iguales", "ganado", ganado, "perdido", perdido);
+
+            }
+        };
+
+        actualizarEstados();
+    }, [cartas, cartasEnemigo]); // Dependencias del useEffect
+
+    useEffect(() => {
+        // Verificar el ganador del juego y llamar a las funciones onChange correspondientes
+        if (juegoFinalizado && perdido &&!ganado&&!empate) {
             onPerdidoChange(true);
-        } else if (juegoFinalizado && ganado) {
+        } else if (juegoFinalizado && ganado &&!perdido &&!empate) {
             onGanadoChange(true);
-        } else if (juegoFinalizado && empate) {
+        } else if (juegoFinalizado && empate && !ganado&& !perdido) {
             onEmpateChange(true);
         }
-    }, [cartas, cartasEnemigo, juegoFinalizado, perdido, onPerdidoChange]);
+    }, [juegoFinalizado, perdido, ganado, empate]);
+
+
 
     return (
         <div className="w-2/5 border-8 border-solid rounded-lg h-full border-amber-950">
