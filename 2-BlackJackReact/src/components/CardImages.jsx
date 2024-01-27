@@ -46,6 +46,7 @@ import reyTrebol from "../img/king_of_clubs2.png";
 import reyEspadas from "../img/king_of_spades2.png";
 import reyDiamantes from "../img/king_of_diamonds2.png";
 import reyCorazones from "../img/king_of_hearts2.png";
+import negro from "../img/negro.jpg"
 
 const cards = [
     { valuee: [1, 11], img: AsCorazones },
@@ -96,6 +97,8 @@ const cards = [
     { valuee: [10], img: reyEspadas },
     { valuee: [10], img: reyDiamantes },
     { valuee: [10], img: reyCorazones },
+    { valuee: [0], img: negro },
+
 ];
 
 
