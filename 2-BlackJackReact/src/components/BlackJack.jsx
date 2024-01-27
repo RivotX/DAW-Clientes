@@ -2,10 +2,11 @@ import Card from "./Card";
 import cards from "./CardImages";
 import { useState, useEffect } from "react";
 
-function BlackJack() {
+function BlackJack({ perdidoB, onPerdidoChange }) {
     const randomNumber1 = Math.floor(Math.random() * 48);
-    const [contador, setcontador] = useState(0);
+    const [contador, setcontador] = useState(cards[randomNumber1].valuee[0]);
     const [cartas, setCartas] = useState([{ img: cards[randomNumber1].img, value: cards[randomNumber1].valuee }]);
+    const [perdido, setPerdido] = useState(false);
 
     const handlePedir = () => {
         const randomNumber = Math.floor(Math.random() * 48);
@@ -23,7 +24,7 @@ function BlackJack() {
             const valorCarta = carta.value.length > 1 ? carta.value[1] : carta.value[0];
             suma += valorCarta;
 
-            // Verifica si la carta es un As y si tiene el valor 11
+            // es un as?
             if (carta.value.length > 1 && valorCarta === 11) {
                 tieneAs = true;
             }
@@ -34,6 +35,11 @@ function BlackJack() {
         }
 
         setcontador(suma);
+        if (suma > 21) {
+            setPerdido(true)
+            onPerdidoChange(true); // Esto ejecuta la función handlePerdidoChange en App.jsx pasando true como parametro
+            console.log("perdiste")
+        }
     }, [cartas]);
 
     return (
@@ -55,6 +61,8 @@ function BlackJack() {
                     <button className="w-2/5 bg-gray-200 rounded-lg">Plantarse</button>
                 </div>
             </div>
+
+
         </div>
     );
 }
