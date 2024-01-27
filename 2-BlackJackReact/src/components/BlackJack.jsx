@@ -6,13 +6,14 @@ const randomNumber1 = Math.floor(Math.random() * 48);
 const randomNumberE = Math.floor(Math.random() * 48);
 const randomNumber3 = Math.floor(Math.random() * 48);
 
-function BlackJack({ onPerdidoChange, onGanadoChange }) {
+function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     const [cartas, setCartas] = useState([{ img: cards[randomNumber1].img, value: cards[randomNumber1].valuee }]);
     const [cartasEnemigo, setcartasEnemigo] = useState([{ img: cards[randomNumberE].img, value: cards[randomNumberE].valuee }, { img: cards[48].img, value: cards[randomNumber3].valuee }]);
     const [contador, setcontador] = useState(cards[randomNumber1].valuee[0]);
     const [contadorEnemigo, setcontadorEnemigo] = useState(cards[randomNumberE].valuee[0]);
     const [perdido, setPerdido] = useState(false);
     const [ganado, setGanado] = useState(false);
+    const [empate, setEmpate] = useState(false);
     const [isPlantado, setisPlantado] = useState(false);
     const [juegoFinalizado, setJuegoFinalizado] = useState(false);
 
@@ -24,7 +25,6 @@ function BlackJack({ onPerdidoChange, onGanadoChange }) {
     const handlePlantarse = () => {
         if (!isPlantado) {
             setisPlantado(true);
-            const nuevasCartas = [...cartas];
             const nuevasCartasEnemigo = [...cartasEnemigo];
             nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img };
             setcartasEnemigo([...nuevasCartasEnemigo]);
@@ -44,6 +44,8 @@ function BlackJack({ onPerdidoChange, onGanadoChange }) {
             setJuegoFinalizado(true);
         }
     }
+
+    //contador jugador
 
     useEffect(() => {
         let suma = 0;
@@ -70,6 +72,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange }) {
         }
     }, [cartas]);
 
+    //contador groupier
     useEffect(() => {
         let suma = 0;
         let tieneAs_e = false;
@@ -93,6 +96,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange }) {
         setcontadorEnemigo(suma);
     }, [cartasEnemigo]);
 
+    //verificar ganador 
     useEffect(() => {
         const nuevasCartasEnemigo = [...cartasEnemigo];
         const nuevasCartas = [...cartas];
@@ -104,20 +108,28 @@ function BlackJack({ onPerdidoChange, onGanadoChange }) {
             setPerdido(true);
         } else if (nuevoContadorEnemigo > 21) {
             setGanado(true);
-        } else if (nuevoContador > nuevoContadorEnemigo) {
-            setGanado(true);
         } else if (nuevoContador === nuevoContadorEnemigo) {
             setGanado(false);
             setPerdido(false);
+            setEmpate(true);
+        } else if (nuevoContador > nuevoContadorEnemigo) {
+            setGanado(true);
+            setPerdido(false);
+            setEmpate(false);
         } else {
             setPerdido(true);
+            setEmpate(false);
+            setGanado(false);
         }
+
 
         // Solo ejecutar onPerdidoChange al final del juego
         if (juegoFinalizado && perdido) {
             onPerdidoChange(true);
         } else if (juegoFinalizado && ganado) {
             onGanadoChange(true);
+        } else if (juegoFinalizado && empate) {
+            onEmpateChange(true);
         }
     }, [cartas, cartasEnemigo, juegoFinalizado, perdido, onPerdidoChange]);
 

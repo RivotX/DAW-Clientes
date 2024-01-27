@@ -3,10 +3,12 @@ import BlackJack from './components/BlackJack';
 import { useState } from 'react';
 import HasperdidoModal from "./components/HasPerdidoModal";
 import HasGanadoModal from "./components/HasGanadoModal";
+import EmpateModal from "./components/EmpateModal";
 
 export default function App() {
   const [perdido, setPerdido] = useState(false);
   const [ganado, setGanado] = useState(false);
+  const [empate, setEmpate] = useState(false);
 
   const handlePerdidoChange = (nuevoEstado) => {
     setTimeout(() => {
@@ -22,6 +24,13 @@ export default function App() {
 
     }, 500);
   };
+  const handleEmpateChange = (nuevoEstado) => {
+    setTimeout(() => {
+      setEmpate(nuevoEstado);
+      console.log(nuevoEstado);
+
+    }, 500);
+  };
 
 
 
@@ -33,7 +42,7 @@ export default function App() {
       </h1>
 
       <div className='flex items-center justify-center min-h-full pt-5'>
-        <BlackJack onPerdidoChange={handlePerdidoChange} onGanadoChange={handleGanadoChange} />
+        <BlackJack onPerdidoChange={handlePerdidoChange} onGanadoChange={handleGanadoChange} onEmpateChange={handleEmpateChange}/>
       </div>
       {/* Renderizar Modal has perdido*/}
       {perdido && (
@@ -42,6 +51,10 @@ export default function App() {
       {/* Renderizar Modal has ganado*/}
       {ganado && (
         <HasGanadoModal />
+      )}
+      {/* Renderizar Modal has ganado*/}
+      {empate && (
+        <EmpateModal />
       )}
       
     </div>
