@@ -1,5 +1,5 @@
 import XD from '../img/XD.png'
-const HasGanadoModal = () => {
+const EmpateModal = () => {
     const handleClick = () => {
         window.location.reload();
 
@@ -12,9 +12,9 @@ const HasGanadoModal = () => {
                     <img className="w-1/4 h-1/4" src={XD} />
                 </div>
 
-                <h1 className='text-white text-3xl font-bold w-full text-center'>Hasg ganado</h1>
+                <h1 className='text-white text-3xl font-bold w-full text-center'>Empate?¿¿?</h1>
                 <button className='bg-yellow-400 p-3 rounded-md my-2' onClick={handleClick}> Jugar de nuevo</button>
-                <h1 className='text-white text-3xl font-bold w-full text-center'>Hasg ganado</h1>
+                <h1 className='text-white text-3xl font-bold w-full text-center'>Empate?¿¿?</h1>
 
                 <div className='flex justify-between w-4/5'>
                     <img className="w-1/4 h-1/4" src={XD} />
@@ -26,4 +26,4 @@ const HasGanadoModal = () => {
         </div>
     )
 }
-export default HasGanadoModal
+export default EmpateModal

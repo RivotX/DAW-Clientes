@@ -2,9 +2,11 @@ import bg from './img/bg.png';
 import BlackJack from './components/BlackJack';
 import { useState } from 'react';
 import HasperdidoModal from "./components/HasPerdidoModal";
+import HasGanadoModal from "./components/HasGanadoModal";
 
 export default function App() {
   const [perdido, setPerdido] = useState(false);
+  const [ganado, setGanado] = useState(false);
 
   const handlePerdidoChange = (nuevoEstado) => {
     setTimeout(() => {
@@ -13,6 +15,15 @@ export default function App() {
 
     }, 500);
   };
+  const handleGanadoChange = (nuevoEstado) => {
+    setTimeout(() => {
+      setGanado(nuevoEstado);
+      console.log(nuevoEstado);
+
+    }, 500);
+  };
+
+
 
 
   return (
@@ -20,14 +31,19 @@ export default function App() {
       <h1 className="text-3xl font-bold text-center text-white underline">
         BlackJack
       </h1>
-      
+
       <div className='flex items-center justify-center min-h-full pt-5'>
-        <BlackJack onPerdidoChange={handlePerdidoChange} />
+        <BlackJack onPerdidoChange={handlePerdidoChange} onGanadoChange={handleGanadoChange} />
       </div>
       {/* Renderizar Modal has perdido*/}
       {perdido && (
         <HasperdidoModal />
       )}
+      {/* Renderizar Modal has ganado*/}
+      {ganado && (
+        <HasGanadoModal />
+      )}
+      
     </div>
 
 
