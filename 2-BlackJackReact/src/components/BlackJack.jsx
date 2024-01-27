@@ -10,21 +10,30 @@ function BlackJack() {
     const handlePedir = () => {
         const randomNumber = Math.floor(Math.random() * 48);
 
-        setCartas([...cartas, { img: cards[randomNumber].img, value: cards[randomNumber].valuee }]); 
+        setCartas([...cartas, { img: cards[randomNumber].img, value: cards[randomNumber].valuee }]);
 
     };
 
+
     useEffect(() => {
         let suma = 0;
+        let tieneAs = false;
 
-        cartas.forEach(carta => {
-            suma = suma + carta.value;
+        cartas.forEach((carta) => {
+            const valorCarta = carta.value.length > 1 ? carta.value[1] : carta.value[0];
+            suma += valorCarta;
+
+            // Verifica si la carta es un As y si tiene el valor 11
+            if (carta.value.length > 1 && valorCarta === 11) {
+                tieneAs = true;
+            }
         });
 
-        setcontador(suma);
+        if (suma > 21 && tieneAs) {
+            suma -= 10;
+        }
 
-        // El código dentro de este bloque se ejecutará después de actualizar el estado
-        console.log(suma);
+        setcontador(suma);
     }, [cartas]);
 
     return (
@@ -33,7 +42,7 @@ function BlackJack() {
                 <p className="h-10 w-28 bg-red-400 text-black">
                     <span>{contador}</span>
                 </p>
-                <div className="flex w-4/5 gap-2">
+                <div className="flex w-full gap-2 justify-center">
                     {/* Renderizar cartas Jugador*/}
                     {cartas.map((carta, index) => (
                         <Card key={index} img={carta.img} value={carta.value} />
