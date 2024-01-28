@@ -11,11 +11,11 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     const [cartasEnemigo, setcartasEnemigo] = useState([{ img: cards[randomNumberE].img, value: cards[randomNumberE].valuee }, { img: cards[48].img, value: cards[randomNumber3].valuee }]);
     const [contador, setcontador] = useState(cards[randomNumber1].valuee[0]);
     const [contadorEnemigo, setcontadorEnemigo] = useState(cards[randomNumberE].valuee[0]);
-    const [perdido, setPerdido] = useState(false);
-    const [ganado, setGanado] = useState(false);
-    const [empate, setEmpate] = useState(false);
     const [isPlantado, setisPlantado] = useState(false);
     const [juegoFinalizado, setJuegoFinalizado] = useState(false);
+    let ganado = false;
+    let perdido = false;
+    let empate = false;
 
     const handlePedir = () => {
         const randomNumber = Math.floor(Math.random() * 48);
@@ -76,7 +76,8 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
         if (suma > 21) {
             setJuegoFinalizado(true);
-            setPerdido(true);
+            // setPerdido(true);
+            perdido = true;
             onPerdidoChange(true)
         }
     }, [cartas]);
@@ -100,7 +101,8 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
         }
         if (suma > 21) {
             setJuegoFinalizado(true);
-            setGanado(true);
+            // setGanado(true);
+            ganado = true;
             onGanadoChange(true)
         }
         setcontadorEnemigo(suma);
@@ -157,36 +159,53 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
         // Función para actualizar los estados
         const actualizarEstados = () => {
             if (nuevoContador > 21) {
-                setGanado(false);
-                setEmpate(false);
-                setPerdido(true);
+                // setGanado(false);
+                // setEmpate(false);
+                // setPerdido(true);
+                empate = false;
+                ganado = false;
+                perdido = true;
 
                 console.log("Perdido: jugador pasó de 21");
 
             } else if (nuevoContadorEnemigo > 21) {
-                setPerdido(false);
-                setEmpate(false);
-                setGanado(true);
+                // setPerdido(false);
+                // setEmpate(false);
+                // setGanado(true);
+                empate = false;
+                perdido = false;
+                ganado = true;
 
                 console.log("Ganado: crupier pasó de 21", "ganado", ganado, "perdido", perdido);
 
             } else if (nuevoContador < nuevoContadorEnemigo) {
-                setGanado(false);
-                setEmpate(false);
-                setPerdido(true);
+                // setGanado(false);
+                // setEmpate(false);
+                // setPerdido(true);
+                empate = false;
+                ganado = false;
+                perdido = true;
+
                 console.log("Perdido: contador jugador menor que contador crupier", "ganado", ganado, "perdido", perdido);
 
             } else if (nuevoContador > nuevoContadorEnemigo) {
-                setPerdido(false);
-                setEmpate(false);
-                setGanado(true);
+                // setPerdido(false);
+                // setEmpate(false);
+                // setGanado(true);
+                empate = false;
+                perdido = false;
+                ganado = true;
 
                 console.log("Ganado: contador jugador mayor que contador crupier");
 
             } else if (nuevoContador === nuevoContadorEnemigo) {
-                setPerdido(false);
-                setGanado(false);
-                setEmpate(true);
+                // setPerdido(false);
+                // setGanado(false);
+                // setEmpate(true);
+                perdido = false;
+                ganado = false;
+                empate = true;
+
                 console.log("Empate: contadores iguales", "ganado", ganado, "perdido", perdido);
 
             }
@@ -196,15 +215,18 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     }, [cartas, cartasEnemigo]); // Dependencias del useEffect
 
     useEffect(() => {
-        // Verificar el ganador del juego y llamar a las funciones onChange correspondientes
-        if (juegoFinalizado && perdido &&!ganado&&!empate) {
-            onPerdidoChange(true);
-        } else if (juegoFinalizado && ganado &&!perdido &&!empate) {
-            onGanadoChange(true);
-        } else if (juegoFinalizado && empate && !ganado&& !perdido) {
-            onEmpateChange(true);
+        if (juegoFinalizado) {
+            if (perdido) {
+                onPerdidoChange(true);
+            } else if (ganado) {
+                onGanadoChange(true);
+            } else if (empate) {
+                onEmpateChange(true);
+            }
         }
-    }, [juegoFinalizado, perdido, ganado, empate]);
+    }, [juegoFinalizado, ganado, empate, perdido, onPerdidoChange, onGanadoChange, onEmpateChange]);
+
+
 
 
 
