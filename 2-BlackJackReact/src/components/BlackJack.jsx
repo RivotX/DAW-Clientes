@@ -2,20 +2,33 @@ import Card from "./Card";
 import cards from "./CardImages";
 import { useState, useEffect } from "react";
 
-const randomNumber1 = Math.floor(Math.random() * 48);
-const randomNumberE = Math.floor(Math.random() * 48);
-const randomNumber3 = Math.floor(Math.random() * 48);
-
 function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
-    const [cartas, setCartas] = useState([{ img: cards[randomNumber1].img, value: cards[randomNumber1].valuee }]);
-    const [cartasEnemigo, setcartasEnemigo] = useState([{ img: cards[randomNumberE].img, value: cards[randomNumberE].valuee }, { img: cards[48].img, value: cards[randomNumber3].valuee }]);
-    const [contador, setcontador] = useState(cards[randomNumber1].valuee[0]);
-    const [contadorEnemigo, setcontadorEnemigo] = useState(cards[randomNumberE].valuee[0]);
+    const [cartas, setCartas] = useState([]);
+    const [cartasEnemigo, setcartasEnemigo] = useState([]);
+    const [contador, setcontador] = useState(0);
+    const [contadorEnemigo, setcontadorEnemigo] = useState(0);
     const [isPlantado, setisPlantado] = useState(false);
     const [juegoFinalizado, setJuegoFinalizado] = useState(false);
+    const [randomNumber3, setRandomNumber3] = useState(0);
+
     let ganado = false;
     let perdido = false;
     let empate = false;
+
+    const generarCartas = () => {
+        const randomNumber1 = Math.floor(Math.random() * 48);
+        const randomNumberE = Math.floor(Math.random() * 48);
+        const randomNumber3 = Math.floor(Math.random() * 48);
+        setCartas([{ img: cards[randomNumber1].img, value: cards[randomNumber1].valuee }]);
+        setcartasEnemigo([{ img: cards[randomNumberE].img, value: cards[randomNumberE].valuee }, { img: cards[48].img, value: cards[randomNumber3].valuee }]);
+        setcontador(cards[randomNumber1].valuee[0]);
+        setcontadorEnemigo(cards[randomNumberE].valuee[0]);
+        setRandomNumber3(randomNumber3);
+    };
+
+    useEffect(() => {
+        generarCartas();
+    }, []);
 
     const handlePedir = () => {
         const randomNumber = Math.floor(Math.random() * 48);
@@ -37,8 +50,8 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
             setisPlantado(true);
             const nuevasCartasEnemigo = [...cartasEnemigo];
-            nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img };
-            setcartasEnemigo([...nuevasCartasEnemigo]);
+            nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img }; // Usar randomNumber3 aquí
+            setcartasEnemigo(nuevasCartasEnemigo); // Actualizar el estado de cartasEnemigo
 
             if (nuevoContadorEnemigo < 17 && nuevoContadorEnemigo !== 21) {
                 while (nuevoContadorEnemigo < 17) {
@@ -159,45 +172,30 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
         // Función para actualizar los estados
         const actualizarEstados = () => {
             if (nuevoContador > 21) {
-              
                 empate = false;
                 ganado = false;
                 perdido = true;
-
                 console.log("Perdido: jugador pasó de 21");
-
             } else if (nuevoContadorEnemigo > 21) {
-            
                 empate = false;
                 perdido = false;
                 ganado = true;
-
                 console.log("Ganado: crupier pasó de 21", "ganado", ganado, "perdido", perdido);
-
             } else if (nuevoContador < nuevoContadorEnemigo) {
-               
                 empate = false;
                 ganado = false;
                 perdido = true;
-
                 console.log("Perdido: contador jugador menor que contador crupier", "ganado", ganado, "perdido", perdido);
-
             } else if (nuevoContador > nuevoContadorEnemigo) {
-              
                 empate = false;
                 perdido = false;
                 ganado = true;
-
                 console.log("Ganado: contador jugador mayor que contador crupier");
-
             } else if (nuevoContador === nuevoContadorEnemigo) {
-             
                 perdido = false;
                 ganado = false;
                 empate = true;
-
                 console.log("Empate: contadores iguales", "ganado", ganado, "perdido", perdido);
-
             }
         };
 
@@ -218,34 +216,36 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
 
     return (
-        <div className="w-full border-8 border-solid rounded-lg h-full border-amber-950 sm:w-3/5 md:w-2/5 ">
-            <div className="flex flex-wrap justify-center w-full h-full px-5 py-24 md:p-5 bg-gray-600 bg-opacity-80 ">
-                <div className="flex w-full gap-2 justify-center">
-                    {cartasEnemigo.map((carta, index) => (
-                        <Card key={index} img={carta.img} value={carta.value} />
-                    ))}
-                </div>
-                <div className="flex flex-wrap w-1/5 gap-10 py-2">
-                    <p className="h-10 w-full bg-blue-600 rounded-md items-center text-black flex justify-center">
-                        <span>{isPlantado && (contadorEnemigo)}</span>
-                    </p>
-                    <p className="h-10 w-full bg-red-400 rounded-md items-center text-black flex justify-center">
-                        <span>{contador}</span>
-                    </p>
-                </div>
-                <div className="flex w-full gap-2 justify-center">
-                    {cartas.map((carta, index) => (
-                        <Card key={index} img={carta.img} value={carta.value} />
-                    ))}
-                </div>
-                <div className="flex justify-between w-full mt-4 rounded-md items-center">
-                    <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePedir}>
-                        Pedir carta
-                    </button>
-                    <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePlantarse}>Plantarse</button>
-                </div>
+        <>
+            <div className="flex w-full gap-2 justify-center">
+                {cartasEnemigo.map((carta, index) => (
+                    <div key={index} className={index > 1 ? 'fade-in' : ''} >
+                        <Card img={carta.img} value={carta.value} />
+                    </div>
+                ))}
             </div>
-        </div>
+            <div className="flex flex-wrap w-1/5 gap-10 py-2">
+                <p className="h-10 w-full bg-blue-600 rounded-md items-center text-black flex justify-center">
+                    <span>{isPlantado && (contadorEnemigo)}</span>
+                </p>
+                <p className="h-10 w-full bg-red-400 rounded-md items-center text-black flex justify-center">
+                    <span>{contador}</span>
+                </p>
+            </div>
+            <div className="flex w-full gap-2 justify-center">
+                {cartas.map((carta, index) => (
+                    <div key={index} className={index != 0 ? 'fade-in' : ''} >
+                        <Card img={carta.img} value={carta.value} />
+                    </div>
+                ))}
+            </div>
+            <div className="flex justify-between w-full mt-4 rounded-md items-center">
+                <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePedir}>
+                    Pedir carta
+                </button>
+                <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePlantarse}>Plantarse</button>
+            </div>
+        </>
     );
 }
 
