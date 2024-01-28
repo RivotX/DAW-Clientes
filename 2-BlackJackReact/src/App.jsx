@@ -2,7 +2,6 @@ import bg from './img/bg.png';
 import BlackJack from './components/BlackJack';
 import { useState } from 'react';
 import ModalResultado from "./components/ModalResultado";
-
 import XD from './img/XD.png'
 import clown from './img/clown.png'
 import gigachad from './img/gigachad.png'
