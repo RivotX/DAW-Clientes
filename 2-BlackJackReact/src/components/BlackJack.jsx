@@ -159,9 +159,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
         // Función para actualizar los estados
         const actualizarEstados = () => {
             if (nuevoContador > 21) {
-                // setGanado(false);
-                // setEmpate(false);
-                // setPerdido(true);
+              
                 empate = false;
                 ganado = false;
                 perdido = true;
@@ -169,9 +167,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                 console.log("Perdido: jugador pasó de 21");
 
             } else if (nuevoContadorEnemigo > 21) {
-                // setPerdido(false);
-                // setEmpate(false);
-                // setGanado(true);
+            
                 empate = false;
                 perdido = false;
                 ganado = true;
@@ -179,9 +175,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                 console.log("Ganado: crupier pasó de 21", "ganado", ganado, "perdido", perdido);
 
             } else if (nuevoContador < nuevoContadorEnemigo) {
-                // setGanado(false);
-                // setEmpate(false);
-                // setPerdido(true);
+               
                 empate = false;
                 ganado = false;
                 perdido = true;
@@ -189,9 +183,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                 console.log("Perdido: contador jugador menor que contador crupier", "ganado", ganado, "perdido", perdido);
 
             } else if (nuevoContador > nuevoContadorEnemigo) {
-                // setPerdido(false);
-                // setEmpate(false);
-                // setGanado(true);
+              
                 empate = false;
                 perdido = false;
                 ganado = true;
@@ -199,9 +191,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                 console.log("Ganado: contador jugador mayor que contador crupier");
 
             } else if (nuevoContador === nuevoContadorEnemigo) {
-                // setPerdido(false);
-                // setGanado(false);
-                // setEmpate(true);
+             
                 perdido = false;
                 ganado = false;
                 empate = true;
@@ -227,12 +217,9 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     }, [juegoFinalizado, ganado, empate, perdido, onPerdidoChange, onGanadoChange, onEmpateChange]);
 
 
-
-
-
     return (
-        <div className="w-2/5 border-8 border-solid rounded-lg h-full border-amber-950">
-            <div className="flex flex-wrap justify-center w-full h-full p-5 bg-gray-600 bg-opacity-80">
+        <div className="w-full border-8 border-solid rounded-lg h-full border-amber-950 sm:w-3/5 md:w-2/5 ">
+            <div className="flex flex-wrap justify-center w-full h-full px-5 py-24 md:p-5 bg-gray-600 bg-opacity-80 ">
                 <div className="flex w-full gap-2 justify-center">
                     {cartasEnemigo.map((carta, index) => (
                         <Card key={index} img={carta.img} value={carta.value} />
@@ -251,7 +238,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                         <Card key={index} img={carta.img} value={carta.value} />
                     ))}
                 </div>
-                <div className="flex justify-between w-3/5 mx-auto mt-4 rounded-md text-center items-center">
+                <div className="flex justify-between w-full mt-4 rounded-md items-center">
                     <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePedir}>
                         Pedir carta
                     </button>

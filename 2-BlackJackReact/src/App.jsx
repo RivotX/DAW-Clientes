@@ -43,22 +43,22 @@ export default function App() {
         BlackJack
       </h1>
 
-      <div className='flex items-center justify-center min-h-full pt-5'>
-        <BlackJack onPerdidoChange={handlePerdidoChange} onGanadoChange={handleGanadoChange} onEmpateChange={handleEmpateChange}/>
+      <div className='flex items-center justify-center min-h-screen md:min-h-full md:pt-5  '>
+        <BlackJack onPerdidoChange={handlePerdidoChange} onGanadoChange={handleGanadoChange} onEmpateChange={handleEmpateChange} />
       </div>
       {/* Renderizar Modal has perdido*/}
       {perdido && (
-        <ModalResultado texto={"🤣🤡XDD Has perdido XDXD🤡🤣"} img={clown} img2={XD} img3={XD} img4={clown}/>
+        <ModalResultado texto={"🤣🤡XDD Has perdido (you lost) XDXD🤡🤣"} img={clown} img2={XD} img3={XD} img4={clown} />
       )}
       {/* Renderizar Modal has ganado*/}
       {ganado && (
-        <ModalResultado texto={"🗿You won, easy game🗿"} img={gigachad} img2={gigachad2} img3={gigachad2} img4={gigachad}/>
+        <ModalResultado texto={"🗿You won, easy game🗿"} img={gigachad} img2={gigachad2} img3={gigachad2} img4={gigachad} />
       )}
       {/* Renderizar Modal has ganado*/}
       {empate && (
-        <ModalResultado texto={"empate"} img={pokerface} img2={pokerface} img3={pokerface} img4={pokerface}/>
+        <ModalResultado texto={"empate (draw)"} img={pokerface} img2={pokerface} img3={pokerface} img4={pokerface} />
       )}
-      
+
     </div>
 
 
