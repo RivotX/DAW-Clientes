@@ -128,10 +128,10 @@ export default function App() {
             )}
             {visibleApuestas && (
               <div className='mt-10 flex w-full justify-center'>
-                <img src={casino25} onClick={() => apostar(25)} className='w-1/5 me-2' />
-                <img src={casino50} onClick={() => apostar(50)} className='w-1/4' />
-                <img src={casino100} onClick={() => apostar(100)} className='w-1/4' />
-                <img src={casino500} onClick={() => apostar(500)} className='w-1/5 ms-2' />
+                <img src={casino25} onClick={() => apostar(25)} className='w-1/5 me-2 cursor-pointer' />
+                <img src={casino50} onClick={() => apostar(50)} className='w-1/4 cursor-pointer' />
+                <img src={casino100} onClick={() => apostar(100)} className='w-1/4 cursor-pointer' />
+                <img src={casino500} onClick={() => apostar(500)} className='w-1/5 ms-2 cursor-pointer' />
               </div>
             )}
           </div>
