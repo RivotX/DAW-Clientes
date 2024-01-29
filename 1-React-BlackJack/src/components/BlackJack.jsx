@@ -38,27 +38,38 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
     const handlePlantarse = () => {
         if (!isPlantado) {
             let nuevoContadorEnemigo = 0;
-
+            let asesEnemigo = 0;
+    
             // Calcular el contador del crupier
             cartasEnemigo.forEach((carta) => {
                 let valorCarta = carta.value[0];
-                if (carta.value.length > 1 && nuevoContadorEnemigo + 10 <= 21) {
-                    valorCarta = carta.value[1];
+                if (carta.value.length > 1) {
+                    asesEnemigo++;
+                    if (nuevoContadorEnemigo + 11 <= 21) {
+                        valorCarta = carta.value[1]; 
+                    }
                 }
                 nuevoContadorEnemigo += valorCarta;
             });
-
+    
             setisPlantado(true);
             const nuevasCartasEnemigo = [...cartasEnemigo];
-            nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img }; // Usar randomNumber3 aquí
-            setcartasEnemigo(nuevasCartasEnemigo); // Actualizar el estado de cartasEnemigo
-
+            nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img }; 
+            setcartasEnemigo(nuevasCartasEnemigo); 
+    
+            // Pedir cartas adicionales si el contador del crupier es menor que 17
             if (nuevoContadorEnemigo < 17) {
                 while (nuevoContadorEnemigo < 17) {
                     const newRandomNumber = Math.floor(Math.random() * 48);
                     const nuevaCarta = { img: cards[newRandomNumber].img, value: cards[newRandomNumber].valuee };
                     nuevasCartasEnemigo.push(nuevaCarta);
                     nuevoContadorEnemigo = nuevasCartasEnemigo.reduce((total, carta) => total + parseInt(carta.value), 0);
+
+                    for (let i = 0; i < asesEnemigo; i++) {
+                        if (nuevoContadorEnemigo + 10 <= 21) {
+                            nuevoContadorEnemigo += 10;
+                        }
+                    }
                 }
                 setcartasEnemigo([...nuevasCartasEnemigo]);
             }
@@ -66,6 +77,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
             setJuegoFinalizado(true);
         }
     }
+    
 
     //contador jugador
     useEffect(() => {
