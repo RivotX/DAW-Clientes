@@ -53,7 +53,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
             nuevasCartasEnemigo[1] = { ...nuevasCartasEnemigo[1], img: cards[randomNumber3].img }; // Usar randomNumber3 aquí
             setcartasEnemigo(nuevasCartasEnemigo); // Actualizar el estado de cartasEnemigo
 
-            if (nuevoContadorEnemigo < 17 && nuevoContadorEnemigo !== 21) {
+            if (nuevoContadorEnemigo < 17) {
                 while (nuevoContadorEnemigo < 17) {
                     const newRandomNumber = Math.floor(Math.random() * 48);
                     const nuevaCarta = { img: cards[newRandomNumber].img, value: cards[newRandomNumber].valuee };
@@ -217,7 +217,7 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
 
     return (
         <>
-            <div className="flex w-full gap-2 justify-center">
+            <div className="flex justify-center w-full gap-2">
                 {cartasEnemigo.map((carta, index) => (
                     <div key={index} className={index > 1 ? 'fade-in' : ''} >
                         <Card img={carta.img} value={carta.value} />
@@ -225,25 +225,25 @@ function BlackJack({ onPerdidoChange, onGanadoChange, onEmpateChange }) {
                 ))}
             </div>
             <div className="flex flex-wrap w-1/5 gap-10 py-2">
-                <p className="h-10 w-full bg-blue-600 rounded-md items-center text-black flex justify-center">
+                <p className="flex items-center justify-center w-full h-10 text-black bg-blue-600 rounded-md">
                     <span>{isPlantado && (contadorEnemigo)}</span>
                 </p>
-                <p className="h-10 w-full bg-red-400 rounded-md items-center text-black flex justify-center">
+                <p className="flex items-center justify-center w-full h-10 text-black bg-red-400 rounded-md">
                     <span>{contador}</span>
                 </p>
             </div>
-            <div className="flex w-full gap-2 justify-center">
+            <div className="flex justify-center w-full gap-2">
                 {cartas.map((carta, index) => (
                     <div key={index} className={index != 0 ? 'fade-in' : ''} >
                         <Card img={carta.img} value={carta.value} />
                     </div>
                 ))}
             </div>
-            <div className="flex justify-between w-full mt-4 rounded-md items-center">
-                <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePedir}>
+            <div className="flex items-center justify-between w-full mt-4 rounded-md">
+                <button className="w-2/5 p-2 bg-gray-200 rounded-lg" onClick={handlePedir}>
                     Pedir carta
                 </button>
-                <button className="w-2/5 bg-gray-200 rounded-lg p-2" onClick={handlePlantarse}>Plantarse</button>
+                <button className="w-2/5 p-2 bg-gray-200 rounded-lg" onClick={handlePlantarse}>Plantarse</button>
             </div>
         </>
     );
