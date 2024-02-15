@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Lista de la compra</h1>
+        <input type="text" id="inputItem" class="border border-gray-300 rounded-md px-3 py-2 mb-2" placeholder="Ingrese un elemento">
+        <button onclick="guardarItem()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md mr-2">Guardar</button>
+        <button onclick="mostrarContenido()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mr-2">Mostrar Contenido</button>
+        <button onclick="limpiarContenido()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Limpiar Contenido</button>
+        <ul id="lista" class="mt-4"></ul>
+    </div>
+    <script src="scripts.js"></script>
+</html>
